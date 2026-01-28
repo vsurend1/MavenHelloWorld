@@ -28,7 +28,7 @@ steps:
     echo "Sources: $(Build.SourcesDirectory)"
     ls -la $(Build.SourcesDirectory)
   
-    echo "stagingdir:$("$(Build.ArtifactStagingDirectory)")
+    echo "stagingdir: $("$(Build.ArtifactStagingDirectory)")
     ls -la $(Build.ArtifactStagingDirectory)
   displayName: 'Check source folder contents'
 
