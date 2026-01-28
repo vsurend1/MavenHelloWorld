@@ -81,6 +81,11 @@ steps:
 
   # 4️⃣ Copy WAR file to Tomcat webapps
 - script: |
+      echo "Pipeline workspace: $(Pipeline.workspace)"
+      ls -la $(Pipeline.workspace)
+      ls -la $(Pipeline.workspace)/drop/webapp
+      pwd
+      ls -la
       cp $(Pipeline.Workspace)/drop/webapp/webapp.war tomcat/webapps/
   displayName: 'Copy WAR to Tomcat'
 
