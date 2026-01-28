@@ -72,7 +72,7 @@ steps:
 
   # 3️⃣ Download and extract Tomcat
 - script: |
-      TOMCAT_VERSION=10.1.14
+      TOMCAT_VERSION=10.1.52
       wget https://dlcdn.apache.org/tomcat/tomcat-10/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
       tar -xzf apache-tomcat-$TOMCAT_VERSION.tar.gz
       mv apache-tomcat-$TOMCAT_VERSION tomcat
