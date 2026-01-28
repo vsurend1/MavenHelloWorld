@@ -22,6 +22,7 @@ steps:
     mavenAuthenticateFeed: false
     effectivePomSkip: false
     sonarQubeRunAnalysis: false
+
 - script: echo Hello, world!
   displayName: 'Run a one-line script'
 - script: |
@@ -34,9 +35,17 @@ steps:
 
 - task: CopyFiles@2
   inputs:
-    SourceFolder: '''$(Build.SourcesDirectory)/dist'''
+    SourceFolder: '$(Build.SourcesDirectory)/webapp/target'
     Contents: '**'
-    TargetFolder: '''$(Build.ArtifactStagingDirectory)'''
+    TargetFolder: '$(Build.ArtifactStagingDirectory)/webapp'
+
+- script: |
+    echo "Sources: $(Build.SourcesDirectory)"
+    ls -la $(Build.SourcesDirectory)/webapp/target
+  
+    echo "stagingdir: $(Build.ArtifactStagingDirectory)"
+    ls -la $(Build.ArtifactStagingDirectory)
+  displayName: 'Check folder contents'
 
 - task: PublishBuildArtifacts@1
   inputs:
