@@ -27,10 +27,11 @@ steps:
 - script: |
     echo "Sources: $(Build.SourcesDirectory)"
     ls -la $(Build.SourcesDirectory)
-    displayName: 'Check source folder contents'
+  
     echo "stagingdir:$("$(Build.ArtifactStagingDirectory)")
     ls -la $(Build.ArtifactStagingDirectory)
-    displayName: 'Check stagingdirectory contents'
+  displayName: 'Check source folder contents'
+
 - task: CopyFiles@2
   inputs:
     SourceFolder: '''$(Build.SourcesDirectory)/dist'''
