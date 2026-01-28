@@ -83,10 +83,11 @@ steps:
 - script: |
       echo "Pipeline workspace: $(Pipeline.workspace)"
       ls -la $(Pipeline.workspace)
-      ls -la $(Pipeline.workspace)/drop/webapp
+      ls -la $(Pipeline.workspace)/webapp
+      ls -la $(Pipeline.workspace)/webapp/target
       pwd
       ls -la
-      cp $(Pipeline.Workspace)/drop/webapp/webapp.war tomcat/webapps/
+      cp $(Pipeline.Workspace)/webapp/target/webapp.war webapps/
   displayName: 'Copy WAR to Tomcat'
 
   # 5️⃣ Start Tomcat
