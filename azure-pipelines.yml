@@ -53,7 +53,46 @@ steps:
       ArtifactName: 'drop'
       publishLocation: 'Container'
 
+
+
+  # 1️⃣ Download build artifact
+- task: DownloadPipelineArtifact@2
+  inputs:
+      artifact: drop
+      path: $(Pipeline.Workspace)
+  displayName: 'Download WAR artifact'
+
+  # 2️⃣ Install Java (if not already installed)
+- task: JavaToolInstaller@1
+  inputs:
+      versionSpec: '17'   # match your webapp's Java version
+      jdkArchitectureOption: 'x64'
+      jdkSourceOption: 'PreInstalled'
+
+
+  # 3️⃣ Download and extract Tomcat
 - script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+      TOMCAT_VERSION=10.1.14
+      wget https://dlcdn.apache.org/tomcat/tomcat-10/v$TOMCAT_VERSION/bin/apache-tomcat-$TOMCAT_VERSION.tar.gz
+      tar -xzf apache-tomcat-$TOMCAT_VERSION.tar.gz
+      mv apache-tomcat-$TOMCAT_VERSION tomcat
+      chmod +x tomcat/bin/*.sh
+  displayName: 'Download and extract Tomcat'
+
+  # 4️⃣ Copy WAR file to Tomcat webapps
+- script: |
+      cp $(Pipeline.Workspace)/drop/webapp/webapp.war tomcat/webapps/
+  displayName: 'Copy WAR to Tomcat'
+
+  # 5️⃣ Start Tomcat
+- script: |
+      tomcat/bin/startup.sh
+      sleep 10  # give Tomcat some time to start
+  displayName: 'Start Tomcat'
+
+  # 6️⃣ Test with curl
+- script: |
+      curl -v http://localhost:8080/webapp/
+  displayName: 'Test webapp endpoint'
+
+
